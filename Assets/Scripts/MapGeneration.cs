@@ -31,7 +31,7 @@ public class MapGeneration : MonoBehaviour
     public void GenerateMap()
     {
         tiles = new List<Coord>();
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < width; x++) 
         {
             for (int y = 0; y < height; y++)
             {
@@ -44,7 +44,6 @@ public class MapGeneration : MonoBehaviour
                 }
             }
         }
-        DFS(tiles);
     }
 
     public Vector3 CoordToVector(Coord tile)
@@ -53,55 +52,108 @@ public class MapGeneration : MonoBehaviour
         return point;
     }
 
-    public void DFS(List<Coord> map)
-    {
-        int currentIndex = 0;
-        List<Coord> walledMap = new List<Coord>();
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                Coord mapCoord = map[currentIndex];
-                Coord front = new Coord(mapCoord.tileX, mapCoord.tileY + 1, false);
-                Coord back = new Coord(mapCoord.tileX, mapCoord.tileY -1, false);
-                Coord left = new Coord(mapCoord.tileX -1, mapCoord.tileY, false);
-                Coord right = new Coord(mapCoord.tileX + 1, mapCoord.tileY, false);
-                
-                int rand = UnityEngine.Random.Range(0, 4);
-                switch (rand)
-                {
-                    case 0: //forward or up
-                        front.isWall = true;
-                        break;
-                    case 1: //back or down
-                        back.isWall = true;
-                        break;
-                    case 2: //left
-                        left.isWall = true;
-                        break;
-                    case 3: //right
-                        right.isWall = true;
-                        break;
-                }
-                currentIndex++;
-                for (int i = 0; i < numOfCoords; i++)
-                {
-                    if (map[i].tileX == front.tileX && map[i].tileY == front.tileY)
-                        mapCoord = front;
-                    if (map[i].tileX == back.tileX && map[i].tileY == back.tileY)
-                        mapCoord = back;
-                    if (map[i].tileX == left.tileX && map[i].tileY == left.tileY)
-                        mapCoord = left;
-                    if (map[i].tileX == right.tileX && map[i].tileY == right.tileY)
-                        mapCoord = right;
-                    walledMap.Add(mapCoord);
-                }
-            }
-        }
-    }
 
     void Start()
     {
         GenerateMap();
     }
 }
+
+/*
+ * public int width;
+	public int height;
+
+	public string seed;
+	public bool useRandomSeed;
+
+	[Range(0,100)]
+	public int randomFillPercent;
+
+	int[,] map;
+
+	void Start() {
+		GenerateMap();
+	}
+
+	void Update() {
+		if (Input.GetMouseButtonDown(0)) {
+			GenerateMap();
+		}
+	}
+
+	void GenerateMap() {
+		map = new int[width,height];
+		RandomFillMap();
+
+		for (int i = 0; i < 5; i ++) {
+			SmoothMap();
+		}
+	}
+
+
+	void RandomFillMap() {
+		if (useRandomSeed) {
+			seed = Time.time.ToString();
+		}
+
+		System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+
+		for (int x = 0; x < width; x ++) {
+			for (int y = 0; y < height; y ++) {
+				if (x == 0 || x == width-1 || y == 0 || y == height -1) {
+					map[x,y] = 1;
+				}
+				else {
+					map[x,y] = (pseudoRandom.Next(0,100) < randomFillPercent)? 1: 0;
+				}
+			}
+		}
+	}
+
+	void SmoothMap() {
+		for (int x = 0; x < width; x ++) {
+			for (int y = 0; y < height; y ++) {
+				int neighbourWallTiles = GetSurroundingWallCount(x,y);
+
+				if (neighbourWallTiles > 4)
+					map[x,y] = 1;
+				else if (neighbourWallTiles < 4)
+					map[x,y] = 0;
+
+			}
+		}
+	}
+
+	int GetSurroundingWallCount(int gridX, int gridY) {
+		int wallCount = 0;
+		for (int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX ++) {
+			for (int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY ++) {
+				if (neighbourX >= 0 && neighbourX < width && neighbourY >= 0 && neighbourY < height) {
+					if (neighbourX != gridX || neighbourY != gridY) {
+						wallCount += map[neighbourX,neighbourY];
+					}
+				}
+				else {
+					wallCount ++;
+				}
+			}
+		}
+
+		return wallCount;
+	}
+
+
+	void OnDrawGizmos() {
+		if (map != null) {
+			for (int x = 0; x < width; x ++) {
+				for (int y = 0; y < height; y ++) {
+					Gizmos.color = (map[x,y] == 1)?Color.black:Color.white;
+					Vector3 pos = new Vector3(-width/2 + x + .5f,0, -height/2 + y+.5f);
+					Gizmos.DrawCube(pos,Vector3.one);
+				}
+			}
+		}
+	}
+
+}
+*/
