@@ -10,7 +10,7 @@ public class MenuBehaviour : MonoBehaviour
 
     public void NewGame()
     {
-        SceneManager.LoadScene("1.Regi");
+        SceneManager.LoadScene("Mythos_Map");
     }
 
     public void MainMenu()

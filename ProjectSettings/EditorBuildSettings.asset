@@ -12,5 +12,5 @@ EditorBuildSettings:
     path: Assets/Scenes/2.Credits.unity
     guid: 11bbf3fc0d53fed43a1dec828a1c02ea
   - enabled: 1
-    path: Assets/Scenes/1.Regi.unity
-    guid: 721dbc633b1f7934e936cf4b434fd382
+    path: Assets/Scenes/Mythos_Map.unity
+    guid: 4f3c724462fe58b4d88b53c0d8ac10f5

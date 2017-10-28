@@ -11,6 +11,7 @@ public class PlayerBehavior : MonoBehaviour
     public PlayerData data;
     bool lightToggle;
     public Canvas canvas;
+    public float speed;
     Rigidbody rb;
 
     void Start()
@@ -23,11 +24,11 @@ public class PlayerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveh = Input.GetAxis("Horizontal");
-        float movev = Input.GetAxis("Vertical");
+        float moveh = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+        float movev = Input.GetAxis("Vertical") * Time.deltaTime * speed;
         float roth = Input.GetAxis("Mouse X");
 
-        transform.Translate(moveh * .2f, 0, movev * .2f);
+        transform.Translate(moveh, 0, movev);
         transform.Rotate(0, roth * 2, 0);
 
 
@@ -66,10 +67,10 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "finish")
+        if (other.tag == "Finish")
         {
             canvas.gameObject.SetActive(true);
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
         }
     }
 }

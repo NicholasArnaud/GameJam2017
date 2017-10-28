@@ -9,6 +9,7 @@ public class EnemyBehavior : MonoBehaviour
     private Animator anim;
     public Transform goal;
     NavMeshAgent agent;
+    private bool hit = false;
     void Start()
     {
          anim= GetComponent<Animator>();
@@ -17,12 +18,17 @@ public class EnemyBehavior : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        anim.SetTrigger("Attack");
-        if (other.tag == "Player")
+        if (hit == false)
         {
-            GetComponent<AudioSource>().Play();
-            StartCoroutine(GameOver());
+            if (other.tag == "Player")
+            {
+                hit = true;
+                anim.SetTrigger("Attack");
+                GetComponent<AudioSource>().Play();
+                StartCoroutine(GameOver());
+            }
         }
+        
            
     }
     private void Update()
